@@ -26,3 +26,105 @@
     min-width: 44px;
   }
 }
+
+/* Accessibility wheel styles */
+
+[data-a11y-text-scale="125"] {
+  font-size: 125%;
+}
+
+[data-a11y-text-scale="150"] {
+  font-size: 150%;
+}
+
+[data-a11y-line-height] {
+  line-height: 2 !important;
+}
+
+[data-a11y-line-height] p,
+[data-a11y-line-height] li,
+[data-a11y-line-height] label {
+  line-height: 2 !important;
+}
+
+[data-a11y-letter-spacing] {
+  letter-spacing: 0.12em !important;
+}
+
+[data-a11y-letter-spacing] p,
+[data-a11y-letter-spacing] li {
+  letter-spacing: 0.12em !important;
+}
+
+[data-a11y-dyslexia-font],
+[data-a11y-dyslexia-font] * {
+  font-family: 'OpenDyslexic', 'Comic Sans MS', sans-serif !important;
+}
+
+[data-a11y-high-contrast] {
+  --color-primary: #0000cc;
+  --color-primary-dark: #000099;
+  --color-primary-light: #ccccff;
+}
+
+[data-a11y-high-contrast] body {
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
+[data-a11y-high-contrast] a {
+  color: #66b3ff !important;
+  text-decoration: underline !important;
+}
+
+[data-a11y-high-contrast] button:not([role="switch"]),
+[data-a11y-high-contrast] [role="button"]:not([role="switch"]) {
+  background-color: #0000cc !important;
+  color: #fff !important;
+  border: 2px solid #fff !important;
+}
+
+[data-a11y-high-contrast] h1,
+[data-a11y-high-contrast] h2,
+[data-a11y-high-contrast] h3,
+[data-a11y-high-contrast] p,
+[data-a11y-high-contrast] label,
+[data-a11y-high-contrast] li {
+  color: #fff !important;
+}
+
+[data-a11y-dark-mode] body {
+  background-color: #121212 !important;
+  color: #e0e0e0 !important;
+}
+
+[data-a11y-dark-mode] h1,
+[data-a11y-dark-mode] h2,
+[data-a11y-dark-mode] h3 {
+  color: #f0f0f0 !important;
+}
+
+[data-a11y-dark-mode] p,
+[data-a11y-dark-mode] li,
+[data-a11y-dark-mode] label {
+  color: #ccc !important;
+}
+
+[data-a11y-dark-mode] div:not([class*="bg-"]) {
+  background-color: #1e1e1e !important;
+  border-color: #333 !important;
+}
+
+[data-a11y-reduce-motion] *,
+[data-a11y-reduce-motion] *::before,
+[data-a11y-reduce-motion] *::after {
+  animation-duration: 0s !important;
+  animation-delay: 0s !important;
+  transition-duration: 0s !important;
+  transition-delay: 0s !important;
+}
+
+[data-a11y-focus-outlines] *:focus {
+  outline: 3px solid var(--color-primary) !important;
+  outline-offset: 3px !important;
+}

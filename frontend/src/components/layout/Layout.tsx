@@ -3,6 +3,8 @@ import { useEffect } from 'react'
 import SkipLink from './SkipLink'
 import Header from './Header'
 import { AnnounceProvider, useAnnounce } from '../../hooks/useAnnounce'
+import A11yStyles from '../a11y/A11yStyles'
+import { A11yToggle } from '../a11y/A11yToggle'
 
 const pageTitles: Record<string, string> = {
   '/': 'Dashboard',
@@ -32,6 +34,8 @@ export default function Layout() {
         <SkipLink />
         <Header />
         <PageTitleAnnouncer />
+        <A11yStyles />
+        <A11yToggle />
         <main
           id="main-content"
           tabIndex={-1}
