@@ -1,6 +1,6 @@
 # CI/CD Workflows
 
-This project uses two GitHub Actions workflows.
+This project uses two GitHub Actions workflows that chain together automatically.
 
 ## 1. CI (`ci.yml`)
 
@@ -20,21 +20,30 @@ This project uses two GitHub Actions workflows.
 | `npm run test` | Runs Vitest (unit tests) |
 | `npm run build` | Type-checks with `tsc`, builds with Vite |
 
-If any step fails, the whole workflow fails and the commit gets a red ❌.
+If any step fails, the workflow fails and the commit gets a red ❌ — no release or deploy happens.
 
-## 2. Deploy to GitHub Pages (`deploy.yml`)
+## 2. Release & Deploy (`release.yml`)
 
-| Trigger | Runs on |
-|---|---|
-| `workflow_dispatch` | Only when triggered manually |
+**Triggers automatically** after CI passes on `main`.
 
-**Permissions:** `pages: write`, `id-token: write` — needed to deploy to GitHub Pages.
+Two jobs run sequentially:
 
-**Job: `build-and-deploy`** — runs in the `frontend/` directory.
+### Job 1: `release`
+
+Runs `semantic-release` which:
+- Analyzes commits since the last tag
+- Bumps the version (patch/minor/major)
+- Updates `CHANGELOG.md`
+- Creates a git tag
+- Publishes a GitHub Release
+
+### Job 2: `deploy`
+
+Runs only after `release` succeeds. Builds the frontend and deploys to GitHub Pages.
 
 | Step | What it does |
 |---|---|
-| `actions/checkout@v7` | Pulls the repo |
+| `actions/checkout@v7` | Pulls the latest code (with version bump) |
 | `actions/setup-node@v6` | Installs Node 22, caches |
 | `npm ci` | Clean installs |
 | `npm run build` | Type-checks + Vite build |
@@ -42,17 +51,17 @@ If any step fails, the whole workflow fails and the commit gets a red ❌.
 | `actions/upload-pages-artifact@v5` | Uploads `frontend/dist/` as a deploy artifact |
 | `actions/deploy-pages@v5` | Deploys artifact to GitHub Pages |
 
-### How to trigger a deploy
+### Full pipeline
 
-**Option A — via CLI:**
-```bash
-gh workflow run "Deploy to GitHub Pages"
+```
+Commit → CI → Release → Deploy
 ```
 
-**Option B — via GitHub UI:**
-1. Go to your repo → **Actions** tab
-2. Click **Deploy to GitHub Pages** in the left sidebar
-3. Click the **Run workflow** button on the right
-4. Click the green **Run workflow** button in the dropdown
+One push to `main` runs lint, tests, and build. If all pass, semantic-release creates a new version, then the site is automatically deployed to `https://g-njeru.github.io/past-paper-project/`.
 
-The website updates at `https://g-njeru.github.io/past-paper-project/` after the deploy completes (~1–2 min).
+### Manual deploy (emergency trigger)
+
+If you need to redeploy without a new release (e.g., rollback), run:
+```bash
+gh workflow run "Release & Deploy"
+```
