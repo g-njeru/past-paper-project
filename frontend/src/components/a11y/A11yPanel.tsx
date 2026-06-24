@@ -1,4 +1,4 @@
-import { useAccessibility } from '../../hooks/useAccessibility'
+import { useAccessibility } from '../../hooks/accessibility-context'
 
 function ToggleRow({
   label,

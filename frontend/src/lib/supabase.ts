@@ -6,15 +6,8 @@
 //
 // export const supabase = createClient(supabaseUrl, supabaseKey)
 
-export const supabase = null as unknown as ReturnType<typeof createClient>
-
-function createClient(
-  _url: string,
-  _key: string,
-): { from: (_table: string) => { select: () => Promise<{ data: null; error: null }> } } {
-  return {
-    from: () => ({
-      select: async () => ({ data: null, error: null }),
-    }),
-  }
+type SupabaseClient = {
+  from: (_table: string) => { select: () => Promise<{ data: null; error: null }> }
 }
+
+export const supabase = null as unknown as SupabaseClient

@@ -1,17 +1,5 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  useCallback,
-  type ReactNode,
-} from 'react'
-
-interface AnnounceContextType {
-  message: string
-  announce: (msg: string) => void
-}
-
-const AnnounceContext = createContext<AnnounceContextType | null>(null)
+import { useState, useCallback, type ReactNode } from 'react'
+import { AnnounceContext } from './announce-context'
 
 export function AnnounceProvider({ children }: { children: ReactNode }) {
   const [message, setMessage] = useState('')
@@ -29,12 +17,4 @@ export function AnnounceProvider({ children }: { children: ReactNode }) {
       </div>
     </AnnounceContext.Provider>
   )
-}
-
-export function useAnnounce() {
-  const ctx = useContext(AnnounceContext)
-  if (!ctx) {
-    throw new Error('useAnnounce must be used within AnnounceProvider')
-  }
-  return ctx
 }

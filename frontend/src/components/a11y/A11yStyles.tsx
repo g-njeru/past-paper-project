@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useAccessibility } from '../../hooks/useAccessibility'
+import { useAccessibility } from '../../hooks/accessibility-context'
 
 function setAttr(name: string, value: string | null) {
   if (value === null) {

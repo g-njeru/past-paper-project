@@ -1,5 +1,6 @@
 import { render, screen, renderHook, act } from '@testing-library/react'
-import { AccessibilityProvider, useAccessibility } from '../hooks/useAccessibility'
+import { AccessibilityProvider } from '../hooks/useAccessibility'
+import { useAccessibility } from '../hooks/accessibility-context'
 import type { ReactNode } from 'react'
 
 function wrapper({ children }: { children: ReactNode }) {
