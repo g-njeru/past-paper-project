@@ -1,7 +1,6 @@
 import {
   createContext,
   useContext,
-  type ReactNode,
 } from 'react'
 
 const STORAGE_KEY = 'cpa-a11y-settings'

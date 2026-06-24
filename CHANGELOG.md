@@ -15,6 +15,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - **CI lint errors** — split `useAccessibility.tsx` into `accessibility-context.ts` (types, helpers,
   hook) and `useAccessibility.tsx` (Provider only); added `// ignore` comments to empty catch
   blocks to satisfy `no-empty`
+- **CI lint errors** — removed unused `ReactNode` import from `accessibility-context.ts`
+- **GitHub Actions deprecation** — upgraded `actions/checkout` to `v7`, `actions/setup-node` to
+  `v6`, `actions/configure-pages` to `v6`, `actions/upload-pages-artifact` to `v5`,
+  `actions/deploy-pages` to `v5` to resolve Node 20 deprecation warnings
 
 ### Added
 
