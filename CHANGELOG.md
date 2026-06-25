@@ -4,6 +4,13 @@ All notable changes to this project are documented here.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+# [0.3.0](https://github.com/g-njeru/past-paper-project/compare/v0.2.0...v0.3.0) (2026-06-25)
+
+
+### Features
+
+* add Docker dev stage with docker-compose for consistent dev environment ([f2997cb](https://github.com/g-njeru/past-paper-project/commit/f2997cb2efefabc3a448f8b0c625de2af370707f))
+
 # [0.2.0](https://github.com/g-njeru/past-paper-project/compare/v0.1.0...v0.2.0) (2026-06-24)
 
 
