@@ -1,0 +1,17 @@
+services:
+  dev:
+    build:
+      context: .
+      target: dev
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app/frontend
+      - /app/frontend/node_modules
+
+  prod:
+    build:
+      context: .
+      target: prod
+    ports:
+      - "80:80"
