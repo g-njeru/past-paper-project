@@ -1,7 +1,23 @@
 import { render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
+import { vi } from 'vitest'
 import { AccessibilityProvider } from '../hooks/useAccessibility'
 import App from '../App'
+
+const mockUser = { id: 'test-user', phone: '+254700000000', aud: 'authenticated', role: 'authenticated', email: '', app_metadata: {}, user_metadata: {}, created_at: '', confirmed_at: '', last_sign_in_at: '', identities: [] }
+
+vi.mock('../hooks/useAuth', () => ({
+  AuthProvider: ({ children }: { children: React.ReactNode }) => children,
+  useAuth: () => ({
+    user: mockUser,
+    profile: { id: 'test-user', phone: '+254700000000', display_name: 'Test', is_admin: false, created_at: '' },
+    loading: false,
+    signIn: vi.fn(),
+    signUp: vi.fn(),
+    signOut: vi.fn(),
+    refreshProfile: vi.fn(),
+  }),
+}))
 
 function renderApp(initialEntries: string[] = ['/']) {
   return render(

@@ -12,6 +12,9 @@ const pageTitles: Record<string, string> = {
   '/papers': 'Papers',
   '/topics': 'Topics',
   '/questions': 'Questions',
+  '/login': 'Sign In',
+  '/signup': 'Sign Up',
+  '/admin': 'Admin Panel',
 }
 
 function PageTitleAnnouncer() {

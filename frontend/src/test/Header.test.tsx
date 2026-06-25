@@ -1,6 +1,20 @@
 import { render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
+import { vi } from 'vitest'
 import Header from '../components/layout/Header'
+
+vi.mock('../hooks/useAuth', () => ({
+  AuthProvider: ({ children }: { children: React.ReactNode }) => children,
+  useAuth: () => ({
+    user: null,
+    profile: null,
+    loading: false,
+    signIn: vi.fn(),
+    signUp: vi.fn(),
+    signOut: vi.fn(),
+    refreshProfile: vi.fn(),
+  }),
+}))
 
 describe('Header', () => {
   it('renders navigation links', () => {

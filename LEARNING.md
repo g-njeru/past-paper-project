@@ -48,6 +48,64 @@ Practical lessons learned building this project.
 | `feat: ...\n\nBREAKING CHANGE: ...` | Major bump (1.0.0) |
 | `docs:`, `chore:`, `refactor:` | No release |
 
+### When to run each workflow
+
+| Workflow | Trigger | When to use |
+|---|---|---|
+| **CI** | Push/PR to `main` | **Always.** Every `main` push automatically lints → tests → builds. No exceptions. |
+| **Release** | Auto after CI passes on `main` | **Automatic.** Creates version tag, CHANGELOG, GitHub Release. Does not deploy. |
+| **Deploy** | Manual (`workflow_dispatch`) | **Only when you want the live site to update.** Never automatic by design. |
+
+### Common scenarios
+
+| What you want | What to do |
+|---|---|
+| Quick fix (e.g. typo) | `fix: ...` → push → CI → Release → **Deploy manually** |
+| New feature | `feat: ...` → push → CI → Release (minor bump) → **Deploy manually** |
+| Just experiment | Push to a feature branch. No CI unless you open a PR. |
+| Update live site | `gh workflow run "Deploy to GitHub Pages"` (only after CI+Release on `main`) |
+| No version bump needed | Use `docs:`, `chore:`, `refactor:` commit types |
+
+### When to commit
+
+Every commit should be a **logical unit of change** with a conventional commit
+prefix. Think of each commit as a mini-changelog entry:
+
+| You just did this | Commit message |
+|---|---|
+| Fixed a bug | `git commit -m "fix: fix login error when phone is empty"` |
+| Added a feature | `git commit -m "feat: add admin whitelist management page"` |
+| Updated docs | `git commit -m "docs: add workflow trigger table to LEARNING.md"` |
+| Refactored code | `git commit -m "refactor: extract auth guard into separate file"` |
+| Chore (deps, config) | `git commit -m "chore: upgrade vitest to v4"` |
+
+Don't commit after every file save. Bundle related changes into one commit.
+Don't commit `.env` (it's gitignored). Push to `main` when you're ready for CI.
+
+### When version tags are created
+
+**Automatically by the Release workflow**, not by you. Here's the sequence:
+
+1. You push commits to `main` (e.g. `feat: add X`, `fix: fix Y`)
+2. **CI** runs lint → test → build. If it passes, CI succeeds.
+3. **Release** runs next (via `workflow_run` trigger).
+4. `semantic-release` scans all new commits since the last tag:
+   - If any commit has `BREAKING CHANGE` → **major** bump (e.g. 1.0.0)
+   - If any commit has `feat:` → **minor** bump (e.g. 0.4.0 → 0.5.0)
+   - If any commit has `fix:` → **patch** bump (e.g. 0.4.0 → 0.4.1)
+   - Only `docs:`, `chore:`, `refactor:` → **no release** (no tag created)
+5. `semantic-release` updates version in `package.json`, updates `CHANGELOG.md`,
+   commits those changes with `[skip ci]`, creates a git tag (`v0.5.0`), and
+   publishes a GitHub Release.
+6. **You never manually tag.** If you push a tag yourself, semantic-release will
+   skip (it only processes commits between the last tag and HEAD).
+
+### Summary
+
+- **Commit** → you do it, every logical change
+- **Tag** → semantic-release does it automatically, after CI passes on `main`
+- **Deploy** → you trigger it manually when ready to publish to GitHub Pages
+
 ### Debugging CI Failures
 
 1. Check GitHub Actions logs first — annotations show exact line numbers and errors
@@ -64,6 +122,30 @@ Practical lessons learned building this project.
 - Anonymous volume for `node_modules` prevents host from overwriting container deps
 - Containerization ensures consistent environment across machines but doesn't prevent supply chain
   attacks — need `npm audit` + image scanning (Trivy) + SBOM for that
+- **Starting the dev server**
+  - `docker compose up` — Requires Docker Desktop running. Slower startup (builds
+    container) but fully isolated environment. Hot reload works.
+  - `npm run dev` (from `frontend/`) — No Docker needed. Instant startup. Uses host
+    Node version. Hot reload works.
+  - Both serve on `localhost:5174` (configurable via `HOST_PORT` in `.env`).
+
+### Supabase Backend
+
+- **Auth setup**: Phone + Password provider (not SMS OTP). No Twilio needed —
+  dummy values work since no SMS is sent. Enable at Auth → Providers → Phone.
+- **Whitelist gating**: A `whitelist` table holds allowed phone numbers. A
+  database trigger on `auth.users` insert checks the phone against the whitelist
+  and rejects signup with a clear error if not found.
+- **Row Level Security**: All tables have RLS policies. `whitelist` is
+  admin-only (INSERT/DELETE via `profiles.is_admin`). `papers`/`topics`/`questions`
+  are readable by any authenticated user. `profiles` is self-readable + admin-read-all.
+- **Admin flow**: You sign up → set `is_admin = true` in `profiles` (via Supabase
+  Table Editor) → `/admin` page appears in nav with whitelist management UI.
+- **Env config**: `VITE_SUPABASE_URL` + `VITE_SUPABASE_ANON_KEY` in `.env`. Never
+  committed — `.env` is gitignored. `.env.example` documents the shape.
+  Must be in `frontend/.env` (Vite only reads from the project root, not repo root).
+- **Whoops moment**: `sb_publishable_` keys are NOT anon keys. Real anon keys are
+  JWT tokens starting with `eyJ`. Found at Project Settings → API.
 
 ### Code Organization
 

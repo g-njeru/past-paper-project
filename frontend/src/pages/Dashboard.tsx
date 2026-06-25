@@ -1,15 +1,42 @@
+import { useState, useEffect } from 'react'
+import { supabase } from '../lib/supabase'
 import { useFocusReset } from '../hooks/useFocusReset'
 import Card, { CardTitle } from '../components/ui/Card'
 
-const stats = [
-  { label: 'Past Papers', value: '0', desc: 'Uploaded papers' },
-  { label: 'Questions', value: '0', desc: 'Extracted questions' },
-  { label: 'Topics', value: '0', desc: 'CPA syllabus topics' },
-  { label: 'Studied', value: '0', desc: 'Topics completed' },
-]
+interface Stats {
+  papers: number
+  questions: number
+  topics: number
+}
 
 export default function Dashboard() {
+  const [stats, setStats] = useState<Stats>({ papers: 0, questions: 0, topics: 0 })
+  const [loading, setLoading] = useState(true)
   const headingRef = useFocusReset('/')
+
+  useEffect(() => {
+    async function fetchStats() {
+      const [papersRes, questionsRes, topicsRes] = await Promise.all([
+        supabase.from('papers').select('*', { count: 'exact', head: true }),
+        supabase.from('questions').select('*', { count: 'exact', head: true }),
+        supabase.from('topics').select('*', { count: 'exact', head: true }),
+      ])
+      setStats({
+        papers: papersRes.count ?? 0,
+        questions: questionsRes.count ?? 0,
+        topics: topicsRes.count ?? 0,
+      })
+      setLoading(false)
+    }
+    fetchStats()
+  }, [])
+
+  const statItems = [
+    { label: 'Past Papers', value: stats.papers, desc: 'Uploaded papers' },
+    { label: 'Questions', value: stats.questions, desc: 'Extracted questions' },
+    { label: 'Topics', value: stats.topics, desc: 'CPA syllabus topics' },
+    { label: 'Studied', value: '0', desc: 'Topics completed' },
+  ]
 
   return (
     <div>
@@ -31,9 +58,9 @@ export default function Dashboard() {
         role="list"
         aria-label="Your revision statistics"
       >
-        {stats.map((stat) => (
+        {statItems.map((stat) => (
           <Card key={stat.label} role="listitem">
-            <CardTitle>{stat.value}</CardTitle>
+            <CardTitle>{loading ? '...' : stat.value}</CardTitle>
             <p className="mt-1 text-sm font-medium text-gray-900">
               {stat.label}
             </p>
