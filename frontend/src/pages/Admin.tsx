@@ -16,7 +16,7 @@ export default function Admin() {
     setLoading(false)
   }
 
-  useEffect(() => { fetchWhitelist() }, [])
+  useEffect(() => { fetchWhitelist() }, []) // eslint-disable-line react-hooks/set-state-in-effect
 
   const addNumber = async (e: React.FormEvent) => {
     e.preventDefault()
