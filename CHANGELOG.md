@@ -4,6 +4,13 @@ All notable changes to this project are documented here.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.3.1](https://github.com/g-njeru/past-paper-project/compare/v0.3.0...v0.3.1) (2026-06-25)
+
+
+### Bug Fixes
+
+* separate deploy from release workflow, keep deploy manual ([7d9fe3a](https://github.com/g-njeru/past-paper-project/commit/7d9fe3af0c82b1adbbfa65977f8262a8eee94018))
+
 # [0.3.0](https://github.com/g-njeru/past-paper-project/compare/v0.2.0...v0.3.0) (2026-06-25)
 
 
