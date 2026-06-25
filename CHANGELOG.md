@@ -4,6 +4,13 @@ All notable changes to this project are documented here.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.3.2](https://github.com/g-njeru/past-paper-project/compare/v0.3.1...v0.3.2) (2026-06-25)
+
+
+### Bug Fixes
+
+* make dev server host port configurable via HOST_PORT env var ([ddaac5d](https://github.com/g-njeru/past-paper-project/commit/ddaac5d8e335f42ca61b0523d556aed0c642d333))
+
 ## [0.3.1](https://github.com/g-njeru/past-paper-project/compare/v0.3.0...v0.3.1) (2026-06-25)
 
 
