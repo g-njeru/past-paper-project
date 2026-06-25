@@ -11,5 +11,9 @@ export default defineConfig({
     globals: true,
     setupFiles: './src/test/setup.ts',
     css: true,
+    env: {
+      VITE_SUPABASE_URL: 'https://test.supabase.co',
+      VITE_SUPABASE_ANON_KEY: 'test-key',
+    },
   },
 })
