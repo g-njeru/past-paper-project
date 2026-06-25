@@ -4,6 +4,21 @@ All notable changes to this project are documented here.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+# [0.4.0](https://github.com/g-njeru/past-paper-project/compare/v0.3.2...v0.4.0) (2026-06-25)
+
+
+### Bug Fixes
+
+* add mock Supabase env vars to vitest config for CI ([8fac2f1](https://github.com/g-njeru/past-paper-project/commit/8fac2f1733fe3fd63f7698760e16981718c2b879))
+* move fetchWhitelist before useEffect and suppress react-refresh in useAuth ([c3a8f03](https://github.com/g-njeru/past-paper-project/commit/c3a8f03e209fd2ed2159308b4ac7cb630d98214e))
+* suppress react-hooks/set-state-in-effect lint error in Admin.tsx ([831a369](https://github.com/g-njeru/past-paper-project/commit/831a3690f1fece65576add31a73295fec1417594))
+* suppress react-hooks/set-state-in-effect on fetchWhitelist in useEffect ([5b9c308](https://github.com/g-njeru/past-paper-project/commit/5b9c30871bddfd7a21afda9164d1d2d11a142524))
+
+
+### Features
+
+* add Supabase backend with phone auth and whitelist gating ([f7a5a43](https://github.com/g-njeru/past-paper-project/commit/f7a5a438aa945f88337a13d910a9a1692fc70de9))
+
 ## [0.3.2](https://github.com/g-njeru/past-paper-project/compare/v0.3.1...v0.3.2) (2026-06-25)
 
 
