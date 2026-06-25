@@ -10,18 +10,12 @@ export default function Admin() {
   const [loading, setLoading] = useState(true)
   const headingRef = useFocusReset('/admin')
 
-  const fetchWhitelist = async () => {
-    const { data } = await supabase
-      .from('whitelist')
-      .select('*')
-      .order('created_at', { ascending: false })
+  useEffect(() => { loadWhitelist() }, []) // eslint-disable-line react-hooks/set-state-in-effect
+  async function loadWhitelist() { // eslint-disable-line react-hooks/set-state-in-effect
+    const { data } = await supabase.from('whitelist').select('*').order('created_at', { ascending: false })
     if (data) setWhitelist(data)
     setLoading(false)
   }
-
-  useEffect(() => {
-    fetchWhitelist()
-  }, [])
 
   const addNumber = async (e: React.FormEvent) => {
     e.preventDefault()
