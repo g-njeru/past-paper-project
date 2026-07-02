@@ -159,3 +159,25 @@ At the end of each session (after completing a significant task or reaching a
 natural stopping point), I will ask "Should I add anything to LEARNING.md?"
 before signing off. You decide what goes in — key decisions, discoveries,
 gotchas, or nothing at all.
+
+### Merge Conflicts with semantic-release
+
+`semantic-release` bumps the version in `package.json` and commits it to
+`main` via the Release workflow. If your local `main` doesn't have that
+commit, you'll get a merge conflict when you try to push. The fix:
+
+```bash
+git fetch origin
+git stash                              # save your local changes
+git pull --rebase origin main           # rebase on the release commit
+git stash pop                          # restore your changes
+# resolve conflict in package.json:
+#   keep the version from remote (0.4.0, 0.5.0, etc.)
+#   keep your other changes (description, keywords, etc.)
+git add package.json
+git commit -m "..." && git push
+```
+
+The key rule: **always keep the remote's version number** since
+semantic-release already computed the correct bump. Your other changes
+(description, keywords, etc.) merge normally.
