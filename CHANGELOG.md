@@ -4,6 +4,13 @@ All notable changes to this project are documented here.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+# [0.5.0](https://github.com/g-njeru/past-paper-project/compare/v0.4.0...v0.5.0) (2026-07-02)
+
+
+### Features
+
+* add project infrastructure files (LICENSE, README, templates, contributing guide) ([9994f08](https://github.com/g-njeru/past-paper-project/commit/9994f0808a46e512ef29c33613780124cc80dd2d))
+
 # [0.4.0](https://github.com/g-njeru/past-paper-project/compare/v0.3.2...v0.4.0) (2026-06-25)
 
 

@@ -1,7 +1,7 @@
 {
   "name": "past-paper-project",
   "private": true,
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "CPA revision SPA with Supabase auth and automated CI/CD",
   "keywords": [
     "cpa",
