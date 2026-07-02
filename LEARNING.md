@@ -152,3 +152,10 @@ Don't commit `.env` (it's gitignored). Push to `main` when you're ready for CI.
 - Split context/hooks from provider components to satisfy `react-refresh/only-export-components`
 - Keep files focused: one export type per file (components or hooks, not both)
 - Empty catch blocks need `// ignore` comments to pass `no-empty` lint rule
+
+### Learning Log Protocol
+
+At the end of each session (after completing a significant task or reaching a
+natural stopping point), I will ask "Should I add anything to LEARNING.md?"
+before signing off. You decide what goes in — key decisions, discoveries,
+gotchas, or nothing at all.

@@ -2,6 +2,18 @@
   "name": "past-paper-project",
   "private": true,
   "version": "0.4.0",
+  "description": "CPA revision SPA with Supabase auth and automated CI/CD",
+  "keywords": [
+    "cpa",
+    "revision",
+    "past-papers",
+    "accounting",
+    "supabase",
+    "react"
+  ],
+  "author": "Geturo",
+  "license": "MIT",
+  "homepage": "https://github.com/g-njeru/past-paper-project#readme",
   "type": "module",
   "devDependencies": {
     "semantic-release": "^24.2.3",
